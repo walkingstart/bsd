@@ -1,0 +1,254 @@
+Xft.autohint  : 0
+Xft.lcdfilter : lcddefault
+Xft.hintstyle : hintnone
+Xft.hinting   : 0
+Xft.antialias : 1
+Xft.rgba      : rgb
+Xcursor.size  : 12
+
+!*foreground: #00cc00
+!*foreground_bold: #a8a19f
+!*cursor: #a8a19f
+!*background:       #1b1918
+!!!*background: rgba(0, 0, 0, .7)
+!!! black
+!*color0: #1b1918
+!*color8: #766e6b
+!!! red
+!*color1: #f22c40
+!*color9: #f22c40
+!!! green
+!*color2: #5ab738
+!*color10: #5ab738
+!!! yellow
+!*color3: #d5911a
+!*color11: #d5911a
+!!! blue
+!*color4: #407ee7
+!*color12: #407ee7
+!!! magenta
+!*color5: #6666ea
+!*color13: #6666ea
+!!! cyan
+!*color6: #00ad9c
+!*color14: #00ad9c
+!!! white
+!*color7: #a8a19f
+!*color15: #f1efee
+
+!! special
+!*.foreground:   #e8dfd6
+!*.background:   #021b21
+!*.cursorColor:  #e8dfd6
+!
+!! black
+!*.color0:       #032c36
+!*.color8:       #065f73
+!
+!! red
+!*.color1:       #c2454e
+!*.color9:       #ef5847
+!
+!! green
+!*.color2:       #7cbf9e
+!*.color10:      #a2d9b1
+!
+!! yellow
+!*.color3:       #8a7a63
+!*.color11:      #beb090
+!
+!! blue
+!*.color4:       #2e3340
+!*.color12:      #61778d
+!
+!! magenta
+!*.color5:       #ff5879
+!*.color13:      #ff99a1
+!
+!! cyan
+!*.color6:       #44b5b1
+!*.color14:      #9ed9d8
+!
+!! white
+!*.color7:       #f2f1b9
+!*.color15:      #f6f6c9
+
+!! special
+!*.foreground:   #98d1ce
+!*.background:   #0a0f14
+!*.cursorColor:  #98d1ce
+!
+!! black
+!*.color0:       #0a0f14
+!*.color8:       #10151b
+!
+!! red
+!*.color1:       #c33027
+!*.color9:       #d26939
+!
+!! green
+!*.color2:       #26a98b
+!*.color10:      #081f2d
+!
+!! yellow
+!*.color3:       #edb54b
+!*.color11:      #245361
+!
+!! blue
+!*.color4:       #195465
+!*.color12:      #093748
+!
+!! magenta
+!*.color5:       #4e5165
+!*.color13:      #888ba5
+!
+!! cyan
+!*.color6:       #33859d
+!*.color14:      #599caa
+!
+!! white
+!*.color7:       #98d1ce
+!*.color15:      #d3ebe9
+!!
+
+!! special
+!*.foreground:   #ffffff
+!*.background:   #1e1e1e
+!*.cursorColor:  #ffffff
+!
+!! black
+!*.color0:       #5a7260
+!*.color8:       #8da691
+!
+!! red
+!*.color1:       #8f423c
+!*.color9:       #eeaa88
+!
+!! green
+!*.color2:       #bbbb88
+!*.color10:      #ccc68d
+!
+!! yellow
+!*.color3:       #f9d25b
+!*.color11:      #eedd99
+!
+!! blue
+!*.color4:       #e0ba69
+!*.color12:      #c9b957
+!
+!! magenta
+!*.color5:       #709289
+!*.color13:      #ffcbab
+!
+!! cyan
+!*.color6:       #d13516
+!*.color14:      #c25431
+!
+!! white
+!*.color7:       #efe2e0
+!*.color15:      #f9f1ed
+
+! special
+*.foreground:   #ffffff
+*.background:   #000000
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #251f1f
+*.color8:       #5e5e5e
+
+! red
+*.color1:       #eb4509
+*.color9:       #eb4509
+
+! green
+*.color2:       #94e76b
+*.color10:      #95e76b
+
+! yellow
+*.color3:       #ffac18
+*.color11:      #ffac18
+
+! blue
+*.color4:       #46aede
+*.color12:      #46aede
+
+! magenta
+*.color5:       #e32c57
+*.color13:      #e32c57
+
+! cyan
+*.color6:       #d6dbac
+*.color14:      #d6dbac
+
+! white
+*.color7:       #efefef
+*.color15:      #efefef
+
+
+URxvt.intensityStyles:	false
+URxvt.background:       [70]#000000
+URxvt.depth:		32
+URxvt.font: 		xft:inconsolata:size=16
+URxvt.scrollBar:	false
+!URxvt.cursorColor:	white
+
+!! Extensions
+URxvt.perl-ext-common:	default,matcher,resize-font,url-select,keyboard-select,clipboard
+URxvt.colorUL:		#4682B4
+!! url-select
+URxvt.keysym.M-u:	perl:url-select:select_next
+URxvt.url-select.launcher: linkhandler
+URxvt.url-select.underline: true
+!! keyboard-select:
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+!! resize-font
+URxvt.resize-font.smaller:	C-Down
+URxvt.resize-font.bigger:	C-Up
+!! Matcher
+URxvt.url-launcher:	linkhandler
+URxvt.matcher.button:	1
+!!clipboard
+URxvt.deysym.M-c: perl:clipboard:copy
+URxvt.deysym.M-v: perl:keyboard:paste
+
+
+
+!#################################
+!#! ROFI Color theme
+!#################################
+! !rofi.modi: window, drun, run 
+! !rofi.fullscreen: true
+! !rofi.padding: 370
+! rofi.separator-style: none
+! rofi.hide-scrollbar: true
+! !rofi.bw: 6
+! rofi.width: 700
+! rofi.lines: 11
+! rofi.position:center
+! rofi.font: Hack-regular 14
+! rofi.color-enabled: true
+! !rofi.color-window: #393939, #393939, #268bd2
+! !rofi.color-normal: #393939, #ffffff, #393939, #268bd2, #ffffff
+! !rofi.color-active: #393939, #268bd2, #393939, #268bd2, #205171
+! !rofi.color-urgent: #393939, #f3843d, #393939, #268bd2, #ffc39c
+ rofi.color-window: argb:d42e3440, argb:00000000, #1aa662
+ rofi.color-normal: argb:10000000, #84d498, argb:00000000, #23ff77, #2e3440
+ rofi.color-active: argb:00000000, #50fa7b, argb:00000000, #85fa86, #2e3440
+ rofi.color-urgent: argb:00000000, #1aa662, argb:00000000, #1aa662, #2e3440
+
+
+
+rofi.color-enabled: true
+!rofi.color-window:  #000, #000, #000
+!rofi.color-normal:  #111, #819396, #222, #008ed4, #ffffff
+!rofi.color-active:  #002b37, #008ed4, #003643, #008ed4, #66c6ff
+!rofi.color-urgent:  #002b37, #da4281, #003643, #008ed4, #890661
+
+rofi.fake-transparency: true
+rofi.lines:     11
+rofi.bw:        0
+rofi.opacity:       "10"
+rofi.hide-scrollbar:    true
+rofi.width:     600
+
