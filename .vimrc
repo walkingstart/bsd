@@ -1,395 +1,335 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
-"       Amir Salihefendic — @amix3k
+"An example for a vimrc file.
+"https://www.cnblogs.com/lsgxeva/p/8727590.html
+" Maintainer:   Bram Moolenaar <Bram@vim.org>
+" Last change:  2001 Jul 18
 "
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
-"
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
-" Sections:
-"    -> General
-"    -> VIM user interface
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Visual mode related
-"    -> Moving around, tabs and buffers
-"    -> Status line
-"    -> Editing mappings
-"    -> vimgrep searching and cope displaying
-"    -> Spell checking
-"    -> Misc
-"    -> Helper functions
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"         for Amiga:  s:.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"       for OpenVMS:  sys$login:.vimrc
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 一般设定
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 设定默认解码
+set guifont=-misc-simsun-medium-r-normal-*-*-120-*-*-c-*-iso10646-1
+set bsdir=buffer
+set enc=utf-8
+set fenc=utf-8
+set fencs=utf-8,ucs-bom,gb2312,cp936,gbk,big5
+set langmenu=zh_CN.UTF-8
+set encoding=utf-8
+set fileencoding=utf-8
+set fileencodings=utf-8,ucs-bom,latin1,gb2312,gb18030,cp936,gbk,big5
+set termencoding=utf-8
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Sets how many lines of history VIM has to remember
-set history=500
+"设置颜色
+colorscheme desert
 
-" Enable filetype plugins
+"set guifont=Nimbus\ Mono\ L\ 12
+"set guifont=WenQuanYi\ Bitmap\ Song\ 12
+"set guifont=Verdana\ 10
+"set guifont=Courier\ 11
+"set guifont=Bitstream\ Vera\ Sans\ Mono\ 10
+
+" 显示中文帮助
+if version >= 603
+set helplang=cn
+set encoding=utf-8
+endif
+
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+" 不要使用vi的键盘模式，而是vim自己的键盘模式
+set nocompatible
+
+" history文件中需要记录的行数
+set history=100
+
+" 显示行号
+set number
+
+" 在处理未保存或只读文件的时候，弹出确认
+set confirm
+
+" 与windows共享剪贴板
+set clipboard+=unnamed
+
+" 侦测文件类型
+filetype on
+
+" 载入文件类型插件
 filetype plugin on
+
+" 为特定文件类型载入相关缩进文件
 filetype indent on
 
-" Set to auto read when a file is changed from the outside
-set autoread
+" 保存全局变量
+set viminfo+=!
 
-" With a map leader it's possible to do extra key combinations
-" like <leader>w saves the current file
-let mapleader = ","
+" 带有如下符号的单词不要被换行分割
+set iskeyword+=_,$,@,%,#,-
 
-" Fast saving
-nmap <leader>w :w!<cr>
+" 语法高亮显示
+syntax on
+"
+"         """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""高亮显示gtk关键字""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+syntax keyword gtkType gint gshort guint gushort gulong gdouble gfloat gchar guchar gboolean gpointer highlight link gtkType Type
 
-" :W sudo saves the file 
-" (useful for handling the permission-denied error)
-command W w !sudo tee % > /dev/null
+" 高亮字符，让其不受100列限制
+highlight OverLength ctermbg=red ctermfg=white guibg=red guifg=white
+match OverLength '\%101v.*'
 
-" 启动自动补全
-filetype plugin indent on
-set grepprg=grep\ -nh\ $*
-let g:tex_flavor = "latex"
-set iskeyword+=:
-autocmd BufEnter *.tex set sw=2
+" 状态行颜色
+highlight StatusLine guifg=SlateBlue guibg=Yellow
+highlight StatusLineNC guifg=Gray guibg=White
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
 
-" Avoid garbled characters in Chinese language windows OS
-let $LANG='en' 
-set langmenu=en
-source $VIMRUNTIME/delmenu.vim
-source $VIMRUNTIME/menu.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 文件设置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 不要备份文件（根据自己需要取舍）
+set nobackup
 
-" Turn on the Wild menu
+" 不要生成swap文件，当buffer被丢弃的时候隐藏它
+setlocal noswapfile
+set bufhidden=hide
+
+" 字符间插入的像素行数目
+set linespace=0
+
+" 增强模式中的命令行自动完成操作
 set wildmenu
 
-" Ignore compiled files
-set wildignore=*.o,*~,*.pyc
-if has("win16") || has("win32")
-    set wildignore+=.git\*,.hg\*,.svn\*
-else
-    set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-endif
-
-"Always show current position
+" 在状态行上显示光标所在位置的行号和列号
 set ruler
+set rulerformat=%20(%2*%<%f%=\ %m%r\ %3l\ %c\ %p%%%)
 
-" Height of the command bar
+" 输入的命令显示出来，看的清楚些
+set showcmd
+
+" 命令行（在状态行下）的高度，默认为1，这里是2
 set cmdheight=2
 
-set number
-set relativenumber
-" A buffer becomes hidden when it is abandoned
-set hid
+" 使回格键（backspace）正常处理indent, eol, start等
+set backspace=indent,eol,start
 
-" Configure backspace so it acts as it should act
-set backspace=eol,start,indent
-set whichwrap+=<,>,h,l
+" 跨行移动
+set whichwrap=b,s,<,>,[,]
 
-" Ignore case when searching
+" 可以在buffer的任何地方使用鼠标（类似office中在工作区双击鼠标定位）
+"set mouse=a
+"set selection=exclusive
+"set selectmode=mouse,key
+
+" 启动的时候不显示那个援助乌干达儿童的提示
+set shortmess=atI
+
+" 通过使用: commands命令，告诉我们文件的哪一行被改变过
+set report=0
+
+" 不让vim发出讨厌的滴滴声
+set noerrorbells
+
+" 在被分割的窗口间显示空白，便于阅读
+set fillchars=vert:\ ,stl:\ ,stlnc:\
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 搜索和匹配
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 高亮显示匹配的括号
+set showmatch
+
+" 匹配括号高亮的时间（单位是十分之一秒）
+set matchtime=5
+
+" 在搜索的时候忽略大小写
 set ignorecase
 
-" When searching try to be smart about cases 
-set smartcase
+" 不要高亮被搜索的句子（phrases）
+set nohlsearch
 
-" Highlight search results
-set hlsearch
+" 在搜索时，输入的词句的逐字符高亮（类似firefox的搜索）
+set incsearch
 
-" Makes search act like search in modern browsers
-set incsearch 
+" 制表符可见
+"set list
 
-" Don't redraw while executing macros (good performance config)
-set lazyredraw 
+" 输入:set list命令是应该显示些啥？
+set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 
-" For regular expressions turn magic on
-set magic
+" 光标移动到buffer的顶部和底部时保持3行距离
+set scrolloff=3
 
-" Show matching brackets when text indicator is over them
-set showmatch 
-" How many tenths of a second to blink when matching brackets
-set mat=2
-
-" No annoying sound on errors
-set noerrorbells
+" 不要闪烁
 set novisualbell
-set t_vb=
-set tm=500
 
-" 突出显示当前列
-"set cursorcolumn
-" 突出显示当前行
-set cursorline
+" 我的状态行显示的内容（包括文件类型和解码）
+set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}
 
-" Properly disable sound on errors on MacVim
-if has("gui_macvim")
-    autocmd GUIEnter * set vb t_vb=
-endif
-
-
-" Add a bit extra margin to the left
-set foldcolumn=1
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable 
-
-" Enable 256 colors palette in Gnome Terminal
-if $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
-
-try
-    colorscheme desert
-catch
-endtry
-
-set background=dark
-
-" Set extra options when running in GUI mode
-if has("gui_running")
-    set guioptions-=T
-    set guioptions-=e
-    set t_Co=256
-    set guitablabel=%M\ %t
-endif
-
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
-
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
-set nobackup
-set nowb
-set noswapfile
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
-
-" Be smart when using tabs ;)
-set smarttab
-
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-
-" Linebreak on 500 characters
-set lbr
-set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
-
-
-""""""""""""""""""""""""""""""
-" => Visual mode related
-""""""""""""""""""""""""""""""
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
-
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
-
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-" Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
-
-" Close all the buffers
-map <leader>ba :bufdo bd<cr>
-
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
-
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
-
-" Let 'tl' toggle between this and the last accessed tab
-let g:lasttab = 1
-nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
-
-
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
-
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
-" Specify the behavior when switching between buffers 
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
-
-" Return to last edit position when opening files (You want this!)
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-
-
-""""""""""""""""""""""""""""""
-" => Status line
-""""""""""""""""""""""""""""""
-" Always show the status line
+" 总是显示状态行
 set laststatus=2
 
-" Format the status line
-set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ %l\ \ Column:\ %c
+" 屏幕放不下时，按一次屏幕移动一个字符
+set sidescroll=1
 
+" 下面的滚动条开启
+"slet g:netrw_winsize = 20et guioptions+=b
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Editing mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remap VIM 0 to first non-blank character
-map 0 ^
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 文本格式和排版
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 自动格式化
+set formatoptions=tcrqn
 
-" Move a line of text using ALT+[jk] or Command+[jk] on mac
-nmap <M-j> mz:m+<cr>`z
-nmap <M-k> mz:m-2<cr>`z
-vmap <M-j> :m'>+<cr>`<my`>mzgv`yo`z
-vmap <M-k> :m'<-2<cr>`>my`<mzgv`yo`z
+" 继承前一行的缩进方式，特别适用于多行注释
+set autoindent
 
-if has("mac") || has("macunix")
-  nmap <D-j> <M-j>
-  nmap <D-k> <M-k>
-  vmap <D-j> <M-j>
-  vmap <D-k> <M-k>
-endif
+" 为C程序提供自动缩进
+set smartindent
 
-" Delete trailing white space on save, useful for some filetypes ;)
-fun! CleanExtraSpaces()
-    let save_cursor = getpos(".")
-    let old_query = getreg('/')
-    silent! %s/\s\+$//e
-    call setpos('.', save_cursor)
-    call setreg('/', old_query)
-endfun
+" 使用C样式的缩进
+set cindent
+
+" 制表符为4
+set tabstop=4
+
+" 统一缩进为4
+set softtabstop=4
+set shiftwidth=4
+
+" 不要用空格代替制表符
+set noexpandtab
+
+" 不要换行
+set nowrap
+
+" 在行和段开始处使用制表符
+set smarttab
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" CTags的设定
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 按照名称排序
+let Tlist_Sort_Type = "name"
+
+" 在右侧显示窗口
+let Tlist_Use_Right_Window = 1
+
+" 压缩方式
+let Tlist_Compart_Format = 1
+
+" 如果只有一个buffer，kill窗口也kill掉buffer
+let Tlist_Exist_OnlyWindow = 1
+
+" 不要关闭其他文件的tags
+let Tlist_File_Fold_Auto_Close = 0
+
+" 不要显示折叠树
+let Tlist_Enable_Fold_Column = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 键盘命令
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"imap <C-P> <C-X><C-P>
+"imap <C-F> <C-X><C-F>
+"imap <C-I> <C-X><C-I>
+"imap <C-D> <C-X><C-D>
+"imap <C-L> <C-X><C-L>
+
+" 根据打开文件类型, 启用智能补全
+set completeopt=longest,menu
+" p命令可以使用剪切板上的内容来替换选中的内容
+vnoremap p <Esc>:let current_reg = @"<CR>gvs<C-R>=current_reg<CR><Esc>
+
+nmap <F2> :nohlsearch<CR>
+map <F3> :copen<CR>:grep -R
+map <F7> :w<CR><CR>:copen<CR>:make<CR><CR>
+imap <F7> <Esc>:w<CR><CR>:copen<CR>:make<CR><CR>
+map <F8> :cclose<CR>
+map <F9> :TlistToggle<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 代码折叠编译运行按键命令
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 只在下列文件类型被侦测到的时候显示行号，普通文本文件不显示
 
 if has("autocmd")
-    autocmd BufWritePre *.txt,*.js,*.py,*.wiki,*.sh,*.coffee :call CleanExtraSpaces()
-endif
+autocmd FileType xml,html,c,cs,java,perl,shell,bash,cpp,python,vim,php,ruby set number
+autocmd FileType xml,html vmap <C-o> <ESC>'<i<!--<ESC>o<ESC>'>o-->
+autocmd FileType java,c,cpp,cs vmap <C-o> <ESC>'<o/*<ESC>'>o*/
+autocmd FileType html,text,php,vim,c,java,xml,bash,shell,perl,python setlocal textwidth=78
+autocmd Filetype html,xml,xsl source $VIMRUNTIME/plugin/closetag.vim
+\ if line("'\"") > 0 && line("'\"") <=line("{1}quot;) |
+\   exe "normal g`\"" |
+\ endif
+endif " has("autocmd")
 
+autocmd FileType c,cc,cpp,python,ruby,java,sh,html,javascript autocmd BufWritePre <buffer> :%s/\s\+$//e 
+" F5编译和运行C程序，F6编译和运行C++程序
+" 请注意，下述代码在windows下使用会报错
+" 需要去掉./这两个字符
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spell checking
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+" C的编译和运行
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+exec "w"
+exec "!gcc % -o %<"
+exec "! ./%<"
+endfunc
 
-" Shortcuts using <leader>
-map <leader>sn ]s
-map <leader>sp [s
-map <leader>sa zg
-map <leader>s? z=
+" C++的编译和运行
+map <F6> :call CompileRunGpp()<CR>
+func! CompileRunGpp()
+exec "w"
+exec "!g++ % -o %<"
+exec "! ./%<"
+endfunc
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Misc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Remove the Windows ^M - when the encodings gets messed up
-noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
-
-" Quickly open a buffer for scribble
-map <leader>q :e ~/buffer<cr>
-
-" Quickly open a markdown buffer for scribble
-map <leader>x :e ~/buffer.md<cr>
-
-" Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Helper functions
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Returns true if paste mode is enabled
-function! HasPaste()
-    if &paste
-        return 'PASTE MODE  '
-    endif
-    return ''
+" 能够漂亮地显示.NFO文件
+set encoding=utf-8
+function! SetFileEncodings(encodings)
+let b:myfileencodingsbak=&fileencodings
+let &fileencodings=a:encodings
+endfunction
+function! RestoreFileEncodings()
+let &fileencodings=b:myfileencodingsbak
+unlet b:myfileencodingsbak
 endfunction
 
-" Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-    let l:currentBufNum = bufnr("%")
-    let l:alternateBufNum = bufnr("#")
+au BufReadPre *.nfo call SetFileEncodings('cp437')|set ambiwidth=single
+au BufReadPost *.nfo call RestoreFileEncodings()
 
-    if buflisted(l:alternateBufNum)
-        buffer #
-    else
-        bnext
-    endif
+"高亮显示普通txt文件（需要txt.vim脚本）
+au BufRead,BufNewFile *  setfiletype txt
 
-    if bufnr("%") == l:currentBufNum
-        new
-    endif
+" 用空格键来开关折叠
+set foldenable
+"set foldmethod=manual
+set foldmethod=syntax
+set foldlevel=100
+nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
-    if buflisted(l:currentBufNum)
-        execute("bdelete! ".l:currentBufNum)
-    endif
-endfunction
+" minibufexpl插件的一般设置
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows= 1
+let g:miniBufExplMapCTabSwitchBufs =1
+let g:miniBufExplModSelTarget = 1
 
-function! CmdLine(str)
-    call feedkeys(":" . a:str)
-endfunction 
+"设置快捷方式 Set mapleader
+let mapleader = ","
 
-function! VisualSelection(direction, extra_filter) range
-    let l:saved_reg = @"
-    execute "normal! vgvy"
+"快捷加载,当输入",ss"时，加载.vimrc 文件
+map <silent> <leader>ss :source ~/.vimrc<cr>
+"快速打开编辑.vimrc配置文件--->",ee"
+map <silent> <leader>ee :e ~/.vimrc<cr>
+"快速保存文件--->",w"
+map <silent> <leader>w :w<cr>
+"快速保存并退出文件--->",w"
+map <silent> <leader>wq :wq<cr>
 
-    let l:pattern = escape(@", "\\/.*'$^~[]")
-    let l:pattern = substitute(l:pattern, "\n$", "", "")
-
-    if a:direction == 'gv'
-        call CmdLine("Ack '" . l:pattern . "' " )
-    elseif a:direction == 'replace'
-        call CmdLine("%s" . '/'. l:pattern . '/')
-    endif
-
-    let @/ = l:pattern
-    let @" = l:saved_reg
-endfunction
+"自动命令，每次写入.vimrc后，都会执行这个自动命令，source一次~/.vimrc
+autocmd! bufwritepost .vimrc source ~/.vimrc
